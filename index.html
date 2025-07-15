@@ -6,79 +6,71 @@
   <title>تسجيل الدخول</title>
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
+      font-family: sans-serif;
       background: #f0f0f0;
       color: #333;
+      padding: 20px;
       transition: 0.3s;
+    }
+    .night {
+      background: #1e1e1e;
+      color: white;
     }
     .container {
       max-width: 350px;
-      margin: 50px auto;
+      margin: auto;
       background: #fff;
-      padding: 30px;
+      padding: 25px;
       border-radius: 10px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
-    h2 {
-      margin-bottom: 20px;
-      font-size: 22px;
+    .night .container {
+      background: #2c2c2c;
     }
-    input {
+    h2 {
+      margin-bottom: 15px;
+    }
+    input, button {
       width: 100%;
-      padding: 12px;
-      margin: 10px 0;
+      padding: 10px;
+      margin: 8px 0;
       border-radius: 5px;
       border: 1px solid #ccc;
       font-size: 16px;
     }
     button {
-      width: 100%;
-      padding: 12px;
       background: #4CAF50;
-      border: none;
       color: white;
-      font-size: 16px;
-      border-radius: 5px;
-      cursor: pointer;
+      border: none;
     }
     button:hover {
       background: #45a049;
     }
     .switch {
-      margin-top: 15px;
+      margin-top: 10px;
       font-size: 14px;
     }
     .switch a {
       color: #2196F3;
       cursor: pointer;
     }
-    .night-mode {
-      background: #1e1e1e;
-      color: white;
-    }
-    .night-mode .container {
-      background: #2c2c2c;
-      box-shadow: 0 0 10px rgba(255,255,255,0.1);
-    }
-    .toggle-mode {
-      position: absolute;
+    .top-btn {
+      position: fixed;
       top: 10px;
       left: 10px;
+      padding: 8px 12px;
+      font-size: 13px;
+      border-radius: 5px;
+      border: none;
       background: #333;
       color: white;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 5px;
       cursor: pointer;
-      font-size: 13px;
     }
   </style>
 </head>
 <body>
 
-  <button class="toggle-mode" onclick="toggleMode()">تغيير المظهر</button>
+  <button class="top-btn" onclick="toggleMode()">تغيير الوضع</button>
 
   <div class="container" id="signupBox">
     <h2>إنشاء حساب</h2>
@@ -98,7 +90,7 @@
 
   <script>
     function toggleMode() {
-      document.body.classList.toggle("night-mode");
+      document.body.classList.toggle("night");
     }
 
     function showLogin() {
@@ -114,16 +106,10 @@
     function signUp() {
       const u = document.getElementById("signupUser").value.trim();
       const p = document.getElementById("signupPass").value.trim();
-      if (!u || !p) {
-        alert("من فضلك املأ كل البيانات");
-        return;
-      }
-      if (localStorage.getItem(u)) {
-        alert("الاسم ده مستخدم قبل كده");
-        return;
-      }
+      if (!u || !p) return alert("املأ كل البيانات");
+      if (localStorage.getItem(u)) return alert("الاسم موجود بالفعل");
       localStorage.setItem(u, p);
-      alert("تم إنشاء الحساب! سجّل دخولك الآن");
+      alert("تم إنشاء الحساب، يمكنك تسجيل الدخول الآن");
       showLogin();
     }
 
@@ -137,7 +123,7 @@
           window.AppInventor.setWebViewString("login_success");
         }
       } else {
-        alert("بيانات الدخول غير صحيحة");
+        alert("البيانات غير صحيحة");
       }
     }
   </script>
