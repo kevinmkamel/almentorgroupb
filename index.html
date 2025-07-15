@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>تسجيل الدخول</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: white;
+      color: black;
+      text-align: center;
+      padding: 20px;
+      transition: 0.3s;
+    }
+    .night {
+      background-color: #121212;
+      color: white;
+    }
+    .container {
+      margin: auto;
+      max-width: 300px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background: #f9f9f9;
+    }
+    .night .container {
+      background: #222;
+      border-color: #444;
+    }
+    input, button {
+      margin: 8px 0;
+      padding: 10px;
+      width: 100%;
+    }
+    a {
+      cursor: pointer;
+      color: blue;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="toggleMode()">تغيير الوضع (Light/Night)</button>
+
+  <div id="signupBox" class="container">
+    <h2>إنشاء حساب</h2>
+    <input type="text" id="signupUser" placeholder="اسم المستخدم">
+    <input type="password" id="signupPass" placeholder="كلمة السر">
+    <button onclick="signUp()">تسجيل</button>
+    <p>عندك حساب؟ <a onclick="switchToLogin()">سجل دخولك</a></p>
+  </div>
+
+  <div id="loginBox" class="container" style="display:none;">
+    <h2>تسجيل الدخول</h2>
+    <input type="text" id="loginUser" placeholder="اسم المستخدم">
+    <input type="password" id="loginPass" placeholder="كلمة السر">
+    <button onclick="logIn()">دخول</button>
+    <p>ما عندكش حساب؟ <a onclick="switchToSignUp()">اعمل حساب جديد</a></p>
+  </div>
+
+  <script>
+    function toggleMode() {
+      document.body.classList.toggle("night");
+    }
+
+    function switchToLogin() {
+      document.getElementById("signupBox").style.display = "none";
+      document.getElementById("loginBox").style.display = "block";
+    }
+
+    function switchToSignUp() {
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("signupBox").style.display = "block";
+    }
+
+    function signUp() {
+      const u = document.getElementById("signupUser").value;
+      const p = document.getElementById("signupPass").value;
+      if (!u || !p) return alert("املأ كل البيانات");
+      if (localStorage.getItem(u)) return alert("الاسم مستخدم من قبل");
+      localStorage.setItem(u, p);
+      alert("تم إنشاء الحساب! سجل دخولك دلوقتي");
+      switchToLogin();
+    }
+
+    function logIn() {
+      const u = document.getElementById("loginUser").value;
+      const p = document.getElementById("loginPass").value;
+      const saved = localStorage.getItem(u);
+      if (saved === p) {
+        alert("تم تسجيل الدخول!");
+        if (window.AppInventor) {
+          window.AppInventor.setWebViewString("login_success");
+        }
+      } else {
+        alert("بيانات الدخول غير صحيحة");
+      }
+    }
+  </script>
+</body>
+</html>
